@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo Game</title>
+    <script src="Circle.js"></script>
+    <script src="Global.js"></script>
+    <script src="Player.js"></script>
+</head>
+<body>
+<canvas id="myCanvas" width="400px" height="400px" style="border: 1px solid black;background-color: bisque"></canvas>
+<p id="score"></p>
+<p id="live"></p>
+<script>
+    let canvas = document.getElementById('myCanvas');
+    let circles = [];
+    let score = 0;
+    let live = 100;
+
+    let player = new Player(canvas.width/2, canvas.height - 100,50,'black',10);
+    createCircle(1);
+
+    function createCircle(number) {
+        for (let i = 0; i < number; i++) {
+            createOne();
+        }
+        display();
+    }
+
+    function createOne() {
+        let x = randomNumber(0,canvas.width);
+        let y = -1 * randomNumber(10,50);
+        let r = randomNumber(10,30);
+        let color = randomColor();
+        let speed = randomNumber(5,20);
+        let circle = new Circle(x,y,r,color,speed);
+        circles.push(circle);
+    }
+
+    function display() {
+        player.drawImg(canvas);
+        for (let i = 0; i < circles.length; i++) {
+            circles[i].drawImg(canvas);
+        }
+        document.getElementById('score').innerText = 'Score: '+score;
+        document.getElementById('live').innerText = 'Live: '+live;
+    }
+
+    function moveAll() {
+        clearScreen(canvas);
+        for (let i = 0; i < circles.length; i++) {
+            circles[i].moveDown();
+        }
+        display();
+        checkCrash();
+    }
+
+    setInterval(createOne,1000);
+    setInterval(moveAll,60);
+
+    function checkCrash() {
+        for (let i = 0; i < circles.length; i++) {
+            if(circles[i].y+circles[i].radius >= canvas.height-20){
+                circles[i].imgName = 'egg-popped.png';
+                circles[i].speed = 0;
+                setTimeout(function () {
+                    circles.splice(i,1);
+                    live--;
+                },100);
+                gameOver();
+            }
+            if(isCrash2(player,circles[i])){
+                circles.splice(i,1);
+                score++;
+            }
+        }
+    }
+
+
+
+    function clearScreen(canvas) {
+        let pen = canvas.getContext('2d');
+        pen.clearRect(0,0,canvas.width,canvas.height);
+    }
+
+    function gameOver() {
+        if(live <= 0){
+            alert('Game Over');
+            window.location.reload();
+        }
+    }
+
+    window.addEventListener('keypress',controlPlayer)
+    window.addEventListener('keydown',controlPlayer)
+    window.addEventListener('keyup',controlPlayer)
+
+    function controlPlayer(evt) {
+
+        switch (evt.key){
+            case 'a':
+                if(player.x > 0)
+                    player.moveLeft();
+                break;
+            case 'd':
+                if(player.x < canvas.width - player.radius)
+                    player.moveRight();
+                break;
+        }
+    }
+
+</script>
+</body>
+</html>

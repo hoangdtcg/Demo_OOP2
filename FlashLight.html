@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo FlashLight</title>
+    <script src="Battery.js"></script>
+    <script src="Flashlight.js"></script>
+</head>
+<body>
+<button onclick="fl.turnOn()">Bật</button>
+<button onclick="fl.turnOff()">Tắt</button>
+<button onclick="fl.switch()">Switch</button>
+<script>
+    let fl = new Flashlight();
+    let bat = new Battery();
+    fl.connectBattery(bat);
+
+</script>
+</body>
+</html>

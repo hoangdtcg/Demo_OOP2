@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quan ly san pham</title>
+    <script src="Product.js"></script>
+    <script src="ProductManagement.js"></script>
+</head>
+<body>
+<button onclick="showAllProduct()">Show</button>
+<div id="paginate"></div>
+<table border="1px" id="show-product">
+
+</table>
+
+<script>
+    let kho = new ProductManagement();
+
+    function showAllProduct() {
+        document.getElementById('show-product').innerHTML = kho.showAllProduct();
+    }
+
+    function showProductPage(page) {
+        document.getElementById('show-product').innerHTML = kho.showProductOnPage(page);
+    }
+
+    function addRandomProduct(number) {
+        for (let i = 0; i < number; i++) {
+            let names = ['Quần', 'Áo', 'Giày', 'Dép', 'Mũ'];
+            let colors = ['Đỏ', 'Xanh', 'Tím', 'Vàng', 'Hồng', 'Đen', 'Xám', 'Trắng'];
+            let rand1 = Math.floor(Math.random() * names.length);
+            let rand2 = Math.floor(Math.random() * colors.length);
+            let productName = names[rand1] + ' màu ' + colors[rand2];
+            let price = Math.ceil(Math.random() * 200) * 1000;
+            let product = new Product(productName, price);
+            kho.addProduct(product);
+        }
+    }
+
+    function addRandomUser(number) {
+        for (let i = 0; i < number; i++) {
+            let firstName = ['Nguyễn', 'Trần', 'Đoàn', 'Lê', 'Vũ', 'Phạm'];
+            let middleName = ['Văn', 'Thanh', 'Hồng', 'Thị', 'Minh', 'Anh', 'Thu', 'Kim'];
+            let lastName = ['Trọng', 'Khôi', 'Duy', 'Hùng', 'Quân', 'Tuyết', 'Nga', 'Trang']
+            let rand1 = Math.floor(Math.random() * firstName.length);
+            let rand2 = Math.floor(Math.random() * middleName.length);
+            let rand3 = Math.floor(Math.random() * lastName.length);
+            let fullName = firstName[rand1] + ' ' + middleName[rand2]+' '+lastName[rand3];
+            let product = new Product(fullName, 0);
+            kho.addProduct(product);
+        }
+    }
+
+
+    function paginate(numPerPage) { //phân trang
+        let page = Math.ceil(kho.products.length / numPerPage);
+        createBtn(page);
+    }
+
+    function createBtn(page) {
+        let str = ''
+        for (let i = 1; i <= page; i++) {
+            str += `<button onclick="showProductPage(${i})">${i}</button>`;
+        }
+        document.getElementById('paginate').innerHTML = str;
+    }
+
+    // addRandomProduct(95);
+    // showAllProduct();
+    addRandomUser(100);
+    paginate(kho.limit);
+</script>
+</body>
+</html>

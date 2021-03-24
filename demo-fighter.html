@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Game Đối Kháng</title>
+    <script src="Fighter.js"></script>
+</head>
+<body>
+<button onclick="attack(player1,player2)">Player 1</button>
+<button onclick="attack(player2,player1)">Player 2</button>
+<p id="hp1">0</p>
+<p id="hp2">0</p>
+<script>
+    let player1 = new Fighter('Trọng');
+    let player2 = new Fighter('Quân');
+    function attack(p1,p2) {
+        p1.attack(p2);
+        display()
+    }
+
+    function display() {
+        document.getElementById('hp1').innerHTML = player1.hp;
+        document.getElementById('hp2').innerHTML = player2.hp;
+    }
+
+    display();
+</script>
+</body>
+</html>

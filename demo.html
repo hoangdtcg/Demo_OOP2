@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    let drink1 = {
+        name: 'cafe sữa', // thuộc tính của đối tượng - object
+        price: 3000,
+        image: 'imgs',
+        quantity: 10
+    };
+    let drink2 = {
+        name: 'cafe đen', // thuộc tính của đối tượng - object
+        price: 2000,
+        image: 'imgs',
+        quantity: 10
+    };
+
+    let arr = ['cafe sữa', 3000, 'imgs'];
+
+    class Drink{
+        constructor(_name,_price,_image) {
+            this.name =_name;
+            this.price = _price;
+            this.image = _image;
+            this.quantity = 10;
+        }
+    }
+
+    let drink3 = new Drink('Trà sữa',5000,'trasua');
+    let drink4 = new Drink('Bạc sỉu',2000,'bacsiu.png');
+
+</script>
+</body>
+</html>
